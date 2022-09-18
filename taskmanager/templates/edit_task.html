@@ -19,7 +19,9 @@
             <div class="input-field col s12">
                 <i class="fas fa-align-left prefix light-blue-text text-darken-4"></i>
                 <textarea id="task_description" name="task_description" minlength="5" maxlength="200" type="text"
-                    class="materialize-textarea validate" required>{{ task.task_description }}</textarea>
+                    class="materialize-textarea validate" required>
+                    {{- task.task_description -}}
+                </textarea>
                 <label for="task_description">Task Description</label>
             </div>
         </div>
@@ -27,8 +29,8 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fas fa-calendar-alt prefix light-blue-text text-darken-4"></i>
-                <input id="due_date" name="due_date" value="{{ task.due_date }}" type="text" class="datepicker validate"
-                    required>
+                <input id="due_date" name="due_date" value="{{ task.due_date.strftime('%d %B, %Y') }}" type="text"
+                    class="datepicker validate" required>
                 <label for="due_date">Due Date</label>
             </div>
         </div>
@@ -41,7 +43,7 @@
                         {% if task.is_urgent == True %}
                         <input id="is_urgent" name="is_urgent" type="checkbox" checked>
                         {% else %}
-                        <input id="is_urgent" name="is_urgent" type="checkbox" checked>
+                        <input id="is_urgent" name="is_urgent" type="checkbox">
                         {% endif %}
                         <span class="lever"></span>
                         Is Urgent
@@ -55,7 +57,7 @@
                 <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
                 <select name="category_id" id="category_id" class="validate" required>
                     {% for category in categories %}
-                    {% if task.category_id == category.id %}
+                    {% if category == task.category %}
                     <option value="{{ category.id }}" selected>{{ category.category_name }}</option>
                     {% else %}
                     <option value="{{ category.id }}">{{ category.category_name }}</option>
